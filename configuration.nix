@@ -55,9 +55,9 @@ in
   # System Packages
   ###
   environment.systemPackages = with pkgs; [
-     nano
-     htop
-     git
+    nano
+    htop
+    git
   ];
 
   ###
