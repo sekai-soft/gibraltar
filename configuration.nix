@@ -116,7 +116,7 @@ in
           image: cloudflare/cloudflared
           container_name: cloudflared
           restart: unless-stopped
-          command: tunnel run
+          command: tunnel run galerie
           env_file:
             - /home/nixos/galerie.env
     '';
