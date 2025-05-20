@@ -118,7 +118,7 @@ in
           image: cloudflare/cloudflared
           container_name: cloudflared
           restart: unless-stopped
-          command: tunnel run galerie
+          command: tunnel run 186860ca-309c-439a-a3c3-7c9b38fc680c
           environment:
             TUNNEL_TRANSPORT_PROTOCOL: 'http2'
           env_file:
