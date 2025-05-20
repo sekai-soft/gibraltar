@@ -72,6 +72,7 @@ in
     htop
     git
     curl
+    wget
   ];
 
   ###
