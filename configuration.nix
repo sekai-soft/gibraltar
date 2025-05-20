@@ -37,6 +37,9 @@ in
   
   i18n.defaultLocale = vars.locale;
 
+  virtualisation.docker.enable = true;
+  virtualisation.docker.autoPrune.enable = true;
+
   documentation.enable = false;
 
   ###
@@ -50,6 +53,15 @@ in
     };
   };
   services.getty.autologinUser = null;
+
+  ###
+  # Nix
+  ###
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   ###
   # System Packages
@@ -87,6 +99,38 @@ in
   # User Services
   ###
   services.tailscale.enable = true;
+  environment.etc."stacks/galerie/compose.yaml".text =
+    /* yaml */
+    ''
+      name: galerie
+      services:
+        galerie:
+          image: ghcr.io/sekai-soft/galerie:latest
+          container_name: galerie
+          restart: unless-stopped
+          environment:
+            BASE_URL: 'https://galerie-reader.app'
+          env_file:
+            - /home/nixos/galerie.env
+        cloudflared:
+          image: cloudflare/cloudflared
+          container_name: cloudflared
+          restart: unless-stopped
+          command: tunnel run
+          env_file:
+            - /home/nixos/galerie.env
+    '';
+  systemd.services.galerie = {
+    wantedBy = ["multi-user.target"];
+    after = ["docker.service" "docker.socket"];
+    path = [pkgs.docker];
+    script = ''
+      docker compose -f /etc/stacks/galerie/compose.yaml up
+    '';
+    restartTriggers = [
+      config.environment.etc."stacks/galerie/compose.yaml".source
+    ];
+  };
  
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
