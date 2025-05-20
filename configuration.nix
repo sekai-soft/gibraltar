@@ -33,7 +33,8 @@ in
 
   networking.hostName = vars.hostname;
   networking.networkmanager.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [ 22 7844 ];
+  networking.firewall.allowedUDPPorts = [ 7844 ];
   
   i18n.defaultLocale = vars.locale;
 
@@ -70,6 +71,7 @@ in
     nano
     htop
     git
+    curl
   ];
 
   ###
@@ -116,21 +118,10 @@ in
           image: cloudflare/cloudflared
           container_name: cloudflared
           restart: unless-stopped
-          command: tunnel --protocol http2 run galerie
+          command: tunnel run galerie
           env_file:
             - /home/nixos/galerie.env
     '';
-  systemd.services.galerie = {
-    wantedBy = ["multi-user.target"];
-    after = ["docker.service" "docker.socket"];
-    path = [pkgs.docker];
-    script = ''
-      docker compose -f /etc/stacks/galerie/compose.yaml up
-    '';
-    restartTriggers = [
-      config.environment.etc."stacks/galerie/compose.yaml".source
-    ];
-  };
  
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
