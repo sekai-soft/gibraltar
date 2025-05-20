@@ -2,6 +2,8 @@
 
 let
   vars = import ./vars.nix;
+  galerie-version = builtins.readFile "/home/${vars.username}/galerie.version.txt";
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz";
 in
 {
   ###
@@ -101,27 +103,33 @@ in
   # User Services
   ###
   services.tailscale.enable = true;
-  environment.etc."stacks/galerie/compose.yaml".text =
-    /* yaml */
-    ''
-      name: galerie
-      services:
-        galerie:
-          image: ghcr.io/sekai-soft/galerie:latest
-          container_name: galerie
-          restart: unless-stopped
-          environment:
-            BASE_URL: 'https://galerie-reader.app'
-          env_file:
-            - /home/nixos/galerie.env
-        cloudflared:
-          image: cloudflare/cloudflared
-          container_name: cloudflared
-          restart: unless-stopped
-          command: tunnel run
-          env_file:
-            - /home/nixos/galerie.env
-    '';
+
+  ###
+  # Home
+  ###
+  home-manager.users.${vars.username} = {
+    home.file."galerie/compose.yaml".text =
+      /* yaml */
+      ''
+        name: galerie
+        services:
+          galerie:
+            image: ghcr.io/sekai-soft/galerie:${lib.strings.trimSpace galerie-version}
+            container_name: galerie
+            restart: unless-stopped
+            environment:
+              BASE_URL: 'https://galerie-reader.app'
+            env_file:
+              - /home/nixos/galerie.env
+          cloudflared:
+            image: cloudflare/cloudflared
+            container_name: cloudflared
+            restart: unless-stopped
+            command: tunnel run
+            env_file:
+              - /home/nixos/galerie.env
+      '';
+  };
  
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
