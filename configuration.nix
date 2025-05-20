@@ -119,6 +119,8 @@ in
           container_name: cloudflared
           restart: unless-stopped
           command: tunnel run galerie
+          environment:
+            TUNNEL_TRANSPORT_PROTOCOL: 'http2'
           env_file:
             - /home/nixos/galerie.env
     '';
