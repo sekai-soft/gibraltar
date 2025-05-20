@@ -116,7 +116,7 @@ in
           image: cloudflare/cloudflared
           container_name: cloudflared
           restart: unless-stopped
-          command: tunnel --protocol http2 run galerie
+          command: tunnel --protocol http2 run 8bb86444-45df-46ed-9acf-18991cb8152a
           env_file:
             - /home/nixos/galerie.env
     '';
