@@ -15,13 +15,6 @@ services:
       - browserless
     labels:
       - com.centurylinklabs.watchtower.enable=true
-  browserless:
-    image: browserless/chrome
-    restart: unless-stopped
-    ulimits:
-      core:
-        hard: 0
-        soft: 0
   redis:
     image: 'redis:alpine'
     restart: unless-stopped
