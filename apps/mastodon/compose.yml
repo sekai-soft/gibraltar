@@ -17,7 +17,7 @@ services:
 
   db-backup:
     # restart: always
-    image: ghcr.io/k-t-corp/postgres-backup-s3:15
+    image: ghcr.io/sekai-soft/postgres-backup-s3:15
     restart: unless-stopped
     # networks:
     #   - external_network
