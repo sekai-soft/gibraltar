@@ -8,4 +8,4 @@ REDIS_HOST=redis
 REDIS_PORT=6379
 GITHUB_REPOSITORY=k-t-corp/mastodon
 DEFAULT_LOCALE=zh-CN
-STREAMING_API_BASE_URL=ws://streaming.mastodon.ktachibana.party
+STREAMING_API_BASE_URL=wss://streaming.mastodon.ktachibana.party
