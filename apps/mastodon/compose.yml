@@ -16,12 +16,8 @@ services:
       - 'POSTGRES_DB=mastodon_production'
 
   db-backup:
-    # restart: always
     image: ghcr.io/sekai-soft/postgres-backup-s3:15
     restart: unless-stopped
-    # networks:
-    #   - external_network
-    #   - internal_network
     volumes:
      - ./post-backup.sh:/post.sh
     env_file:
@@ -126,6 +122,16 @@ services:
     command: tunnel run mastodon-streaming
     env_file:
       - env-cloudflared-streaming
+
+  cleanup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      SCHEDULE: '@weekly'
 
 # networks:
 #   external_network:
