@@ -125,7 +125,7 @@ services:
 
   cleanup:
     build:
-      context: .
+      context: ./cleanup
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
