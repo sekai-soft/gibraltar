@@ -15,21 +15,6 @@ services:
       - 'POSTGRES_USER=mastodon'
       - 'POSTGRES_DB=mastodon_production'
 
-  db-backup:
-    image: ghcr.io/sekai-soft/postgres-backup-s3:15
-    restart: unless-stopped
-    volumes:
-     - ./post-backup.sh:/post.sh
-    env_file:
-      - env-backup
-    environment:
-      SCHEDULE: '@daily'
-      BACKUP_KEEP_DAYS: 14
-      POSTGRES_HOST: db
-      POSTGRES_DATABASE: mastodon_production
-      POSTGRES_USER: mastodon
-      POSTGRES_PASSWORD: doesntmatter
-
   redis:
     # restart: always
     image: redis:7-alpine
@@ -123,12 +108,28 @@ services:
     env_file:
       - env-cloudflared-streaming
 
+  db-backup:
+    image: ghcr.io/sekai-soft/postgres-backup-s3:15
+    restart: unless-stopped
+    volumes:
+     - ./post-backup.sh:/post.sh
+    env_file:
+      - env-backup
+    environment:
+      SCHEDULE: '@daily'
+      BACKUP_KEEP_DAYS: 14
+      POSTGRES_HOST: db
+      POSTGRES_DATABASE: mastodon_production
+      POSTGRES_USER: mastodon
+      POSTGRES_PASSWORD: doesntmatter
+
   cleanup:
     build:
       context: ./cleanup
       dockerfile: Dockerfile
     restart: unless-stopped
     volumes:
+      - ./post-cleanup.sh:/post.sh
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       SCHEDULE: '@weekly'
