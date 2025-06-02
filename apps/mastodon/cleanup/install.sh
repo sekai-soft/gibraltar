@@ -13,5 +13,8 @@ mv go-cron /usr/local/bin/go-cron
 chmod u+x /usr/local/bin/go-cron
 apk del curl
 
+# install docker-cli
+apk add docker-cli
+
 # cleanup
 rm -rf /var/cache/apk/*
