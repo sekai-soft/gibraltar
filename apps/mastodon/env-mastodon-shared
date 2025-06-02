@@ -9,3 +9,7 @@ REDIS_PORT=6379
 GITHUB_REPOSITORY=sekai-soft/mastodon
 DEFAULT_LOCALE=zh-CN
 STREAMING_API_BASE_URL=wss://streaming.mastodon.ktachibana.party
+ES_ENABLED=true
+ES_HOST=es
+ES_PORT=9200
+ES_PRESET=single_node_cluster
