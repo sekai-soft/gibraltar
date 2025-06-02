@@ -53,7 +53,7 @@ services:
 
   streaming:
     # build: .
-    image: ghcr.io/sekai-soft/mastodon:v4.3.8-kt
+    image: ghcr.io/sekai-soft/mastodon-streaming:v4.3.8-kt
     # restart: always
     restart: unless-stopped
     # env_file: env
