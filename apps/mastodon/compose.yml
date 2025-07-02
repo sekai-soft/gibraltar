@@ -135,6 +135,8 @@ services:
     command: tunnel run mastodon
     env_file:
       - env-cloudflared
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   cloudflared-streaming:
     image: cloudflare/cloudflared
@@ -142,6 +144,8 @@ services:
     command: tunnel run mastodon-streaming
     env_file:
       - env-cloudflared-streaming
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
   db-backup:
     image: ghcr.io/sekai-soft/postgres-backup-s3:15

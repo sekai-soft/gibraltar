@@ -13,17 +13,21 @@ services:
       - redis
     labels:
       - com.centurylinklabs.watchtower.enable=true
+
   redis:
     image: 'redis:alpine'
     restart: unless-stopped
     volumes:
       - 'redis-data:/data'
+
   cloudflared:
     image: cloudflare/cloudflared
     restart: unless-stopped
     command: tunnel run rsshub
     env_file:
       - env
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
 
 volumes:
   redis-data:
