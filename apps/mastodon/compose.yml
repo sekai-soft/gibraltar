@@ -28,7 +28,7 @@ services:
 
   web:
     # build: .
-    image: ghcr.io/sekai-soft/mastodon:v4.4.3-kt2
+    image: ghcr.io/sekai-soft/mastodon:v4.4.5-kt
     # restart: always
     restart: unless-stopped
     # env_file: env
@@ -53,7 +53,7 @@ services:
 
   streaming:
     # build: .
-    image: ghcr.io/sekai-soft/mastodon-streaming:v4.4.3-kt2
+    image: ghcr.io/sekai-soft/mastodon-streaming:v4.4.5-kt
     # restart: always
     restart: unless-stopped
     # env_file: env
@@ -75,7 +75,7 @@ services:
 
   sidekiq:
     # build: .
-    image: ghcr.io/sekai-soft/mastodon:v4.4.3-kt2
+    image: ghcr.io/sekai-soft/mastodon:v4.4.5-kt
     # restart: always
     restart: unless-stopped
     # env_file: env
@@ -161,17 +161,6 @@ services:
       POSTGRES_DATABASE: mastodon_production
       POSTGRES_USER: mastodon
       POSTGRES_PASSWORD: doesntmatter
-
-  cleanup:
-    build:
-      context: ./cleanup
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    volumes:
-      - ./post-cleanup.sh:/post.sh
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      SCHEDULE: '@weekly'
 
 # networks:
 #   external_network:

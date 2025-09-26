@@ -74,10 +74,10 @@ in
   # System Packages
   ###
   environment.systemPackages = with pkgs; [
-    nano
-    htop
-    git
     curl
+    git
+    htop
+    nano
     wget
   ];
 
@@ -108,6 +108,12 @@ in
   # User Services
   ###
   services.tailscale.enable = true;
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "0 0 * * 7 nixos /home/nixos/jobs/mastodon-cleanup.sh"
+    ];
+  };
  
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
