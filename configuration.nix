@@ -78,6 +78,7 @@ in
     git
     htop
     nano
+    tmux
     wget
   ];
 
