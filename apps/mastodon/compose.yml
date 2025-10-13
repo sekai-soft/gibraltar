@@ -28,7 +28,7 @@ services:
 
   web:
     # build: .
-    image: ghcr.io/sekai-soft/mastodon:v4.4.5-kt
+    image: ghcr.io/sekai-soft/mastodon:v4.4.6-kt
     # restart: always
     restart: unless-stopped
     # env_file: env
@@ -53,7 +53,7 @@ services:
 
   streaming:
     # build: .
-    image: ghcr.io/sekai-soft/mastodon-streaming:v4.4.5-kt
+    image: ghcr.io/sekai-soft/mastodon-streaming:v4.4.6-kt
     # restart: always
     restart: unless-stopped
     # env_file: env
@@ -75,7 +75,7 @@ services:
 
   sidekiq:
     # build: .
-    image: ghcr.io/sekai-soft/mastodon:v4.4.5-kt
+    image: ghcr.io/sekai-soft/mastodon:v4.4.6-kt
     # restart: always
     restart: unless-stopped
     # env_file: env
