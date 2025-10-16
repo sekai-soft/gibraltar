@@ -112,7 +112,7 @@ in
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "0 0 * * 7 nixos /home/nixos/jobs/mastodon-cleanup.sh"
+      "0 0 1 * * nixos /home/nixos/jobs/mastodon-cleanup.sh"
     ];
   };
  
